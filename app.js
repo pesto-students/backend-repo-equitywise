@@ -1,17 +1,13 @@
-const app = require("express")();
-const http = require("http").Server(app);
-const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://shrishylepandit:b9uB6Hm730O8wzMY@equitywise.1kzmnnq.mongodb.net/?retryWrites=true&w=majority&appName=Equitywise");
-const User = require("./models/userModel");
-
-async function insert() {
-  await User.create({
-    name: "Krishna",
-    email: "krishna@gmail.com",
-  });
-}
-insert();
-
-http.listen(3000, () => {
-  console.log("Server is running...");
+const express = require('express');
+const connectdb = require('./config/dbconfig');
+require('dotenv').config({path:"./Config/.env"});
+const app=express();
+app.use(express.json());
+const signuprouter = require('./routes/signup');
+const loginrouter = require('./routes/login')
+app.use(signuprouter);
+app.use(loginrouter);
+const PORT = process.env.port || 5000;
+app.listen(PORT, () => {
+console.log(`Server is running on port ${PORT}`);
 });

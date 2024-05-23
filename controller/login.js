@@ -5,12 +5,16 @@ async function login(req,res){
     //console.log("req from login controller", req.body);
     try{
         const userData = req.body;
-        const { mailid, password } = userData;
-        const user = await authService.login(mailid);
+        console.log("userdata:", userData);
+        const { emailid, password } = userData;
+        console.log("mailid ", emailid);
+        console.log("password ", password);
+        const user = await authService.login(emailid);
         console.log("existing user details:" ,user);
         if (!user) {
             return res.status(401).json({ error: 'Authentication failed' });
         }
+        console.log(password);
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
             return res.status(401).json({ error: 'Authentication failed' });

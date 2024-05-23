@@ -8,7 +8,9 @@ const userModel = mongoose.model('User', userSchema);
 
 async function findOne(email){
     try{
+        console.log(email);
     const extuser = await userModel.findOne({mailid: email});
+    console.log("ext user from user model",extuser)
     return extuser;   
     }
     catch(error)

@@ -1,7 +1,9 @@
 const express = require('express');
 const connectdb = require('./config/dbconfig');
 require('dotenv').config({path:"./Config/.env"});
+const cors = require('cors');
 const app=express();
+app.use(cors());
 app.use(express.json());
 const signuprouter = require('./routes/signup');
 const loginrouter = require('./routes/login')

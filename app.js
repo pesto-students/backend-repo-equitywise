@@ -13,8 +13,13 @@ const corsOptions = {
 app.use(express.json());
 const signuprouter = require('./routes/signup');
 const loginrouter = require('./routes/login')
+const isUserExistsrouter = require('./routes/isUserExists');
+
+const stockrouter = require('./routes/stock')
 app.use(signuprouter);
 app.use(loginrouter);
+app.use(isUserExistsrouter);
+app.use(stockrouter);
 const PORT = process.env.port || 5000;
 app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}`);

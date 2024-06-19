@@ -35,4 +35,7 @@ async function insert(userData){
         console.log("error message from user", error.message);
     }
 }
+async function pwdChange(userdata){
+    
+}
 module.exports = {userModel, findOne,insert}

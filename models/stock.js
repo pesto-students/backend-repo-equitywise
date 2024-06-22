@@ -106,5 +106,33 @@ async function getStock(req,res){
         res.status(500).json({ error: error.message });
     }
    }
+   async function deletestocksById(req,res)
+   {
+    const { userId, symbol } = req.query;
+    console.log("userid: " +userId);
+    console.log("symbol: " +symbol);
+    try {
+        // Find the portfolio by ID
+        let portfolio = await Portfolio.findOne({user:userId});
+        if (!portfolio) {
+            return res.status(404).json({ error: 'Portfolio not found' });
+        }
 
-module.exports = { Stock, Portfolio ,stockInsert, getStock,updateStockById};
+        // Remove the stock from the portfolio by its _id
+       let index = portfolio.stocks.findIndex(item => item.symbol === symbol);
+       if (!index) {
+           return res.status(404).json({ error: 'Stock not found in portfolio' });
+       }
+        // Remove the stock from the array
+        portfolio.stocks.splice(index, 1);
+        // Save the updated portfolio
+        await portfolio.save();
+
+        res.status(200).json(portfolio);
+    } catch (error) {
+        console.error('Error deleting stock from portfolio:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+   }
+
+module.exports = { Stock, Portfolio ,stockInsert, getStock,updateStockById,deletestocksById};

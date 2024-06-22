@@ -74,4 +74,37 @@ async function getStock(req,res){
 
    }
 
-module.exports = { Stock, Portfolio ,stockInsert, getStock};
+   async function updateStockById(req,res){
+    const { userId } = req.query;
+    console.log("userid: " +userId);
+    const { symbol, name, shares, purchasePrice } = req.body;
+
+    try {
+        let portfolio = await Portfolio.findOne({user:userId});
+        if (!portfolio) {
+            return res.status(404).json({ error: 'Portfolio not found' });
+        }
+
+        // Find the stock by ID within the portfolio
+        let stock = portfolio.stocks.find(item => item.symbol === symbol);
+        if (!stock) {
+            return res.status(404).json({ error: 'Stock not found in portfolio' });
+        }
+
+        // Update stock fields
+        stock.symbol = symbol;
+        stock.name = name;
+        stock.shares = shares;
+        stock.purchasePrice = purchasePrice;
+
+        // Save the portfolio
+        await portfolio.save();
+
+        res.status(200).json(portfolio);
+    } catch (error) {
+        console.error('Error updating stock:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+   }
+
+module.exports = { Stock, Portfolio ,stockInsert, getStock,updateStockById};

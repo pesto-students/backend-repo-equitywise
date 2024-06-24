@@ -20,7 +20,7 @@ async function login(req,res){
             return res.status(401).json({ error: 'Authentication failed' });
         }
         const token = generateToken(user);
-        res.status(201).json({ token:token });
+        res.status(200).json({ token:token });
         
     }
     catch(err){

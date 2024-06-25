@@ -10,9 +10,9 @@ async function FindUser(req,res){
         console.log("mailid ", emailid);
         const user = await authService.login(emailid);
         if (user) {
-            return res.status(200).json({ message: 'User doesnot exists in Server' });
+            return res.status(200).json({ message: 'User exists in Server' });
         }
-        return res.status(201).json({ message: 'User exists in Server' });
+        return res.status(201).json({ message: 'User does not exists in Server' });
     }
 
     catch(err){

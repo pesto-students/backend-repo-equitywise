@@ -3,29 +3,12 @@ const connectdb = require('./config/dbconfig');
 require('dotenv').config({path:"./Config/.env"});
 const cors = require('cors');
 const app=express();
-
-// const corsOptions = {
-//   origin: 'http://localhost:3000',
-//   optionsSuccessStatus: 200
-// };
-
 const corsOptions = {
-  origin: 'https://backend-repo-equitywise.onrender.com', // Replace with your allowed domain
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-};
-// Middleware to set COOP and CORP headers
-app.use((req, res, next) => {
-  res.header('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
-  res.header('Cross-Origin-Resource-Policy', 'same-origin');
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  next();
-});
-
-app.use(cors(corsOptions));
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+  };
+  
+  app.use(cors(corsOptions));
   
 app.use(express.json());
 const signuprouter = require('./routes/signup');
@@ -50,7 +33,6 @@ app.use(getWishlisRrouter);
 app.use(insertWishlistRouter);
 app.use(updateWishlistRouter);
 app.use(deleteWishlistRouter);
-
 const PORT = process.env.port || 5000;
 app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}`);

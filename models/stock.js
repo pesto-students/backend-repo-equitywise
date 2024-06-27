@@ -42,7 +42,11 @@ async function stockInsert(req, res) {
         if (!portfolio) {
             portfolio = new Portfolio({ user: userId, stocks: [] });
         }
-
+        // Check if the stock already exists in the portfolio
+        const existingStock = portfolio.stocks.find(item => item.symbol === symbol);
+        if (existingStock) {
+            return res.status(400).json({ error: 'Stock already exists in the portfolio' });
+        }
         // Create a new stock
         const stock = new Stock({ symbol, name, shares, purchasePrice });
 

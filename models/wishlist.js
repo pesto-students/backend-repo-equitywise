@@ -42,7 +42,10 @@ async function wishlistInsert(req, res) {
         if (!wishPortfolio) {
             wishPortfolio = new WishPortfolio({ user: userId, Wishlist: [] });
         }
-
+        const existingStock = wishPortfolio.wishlists.find(item => item.symbol === symbol);
+        if (existingStock) {
+            return res.status(400).json({ error: 'Stock already exists in the wishlist' });
+        }
         // Create a new stock
         const wishlist = new Wishlist({ symbol, name, shares, purchasePrice });
 

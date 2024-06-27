@@ -4,11 +4,17 @@ require('dotenv').config({path:"./Config/.env"});
 const cors = require('cors');
 const app=express();
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200
-};
+// const corsOptions = {
+//   origin: 'http://localhost:3000',
+//   optionsSuccessStatus: 200
+// };
 
+const corsOptions = {
+  origin: 'https://backend-repo-equitywise.onrender.com', // Replace with your allowed domain
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
 // Middleware to set COOP and CORP headers
 app.use((req, res, next) => {
   res.header('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');

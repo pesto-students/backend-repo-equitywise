@@ -14,11 +14,11 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     // Handle preflight requests
-    if (req.method === 'OPTIONS') {
-        res.status(204).end();
-    } else {
-        next();
-    }
+    // if (req.method === 'OPTIONS') {
+    //     res.status(204).end();
+    // } else {
+    //     next();
+    // }
 });
 // const corsOptions = {
 //     origin: 'http://localhost:3000',

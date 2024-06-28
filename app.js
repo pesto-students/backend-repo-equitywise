@@ -3,12 +3,29 @@ const connectdb = require('./config/dbconfig');
 require('dotenv').config({path:"./Config/.env"});
 const cors = require('cors');
 const app=express();
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200
-  };
+const allowedOrigins = ['http://localhost:3000', 'https://equitywise.netlify.app'];
+
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        res.status(204).end();
+    } else {
+        next();
+    }
+});
+// const corsOptions = {
+//     origin: 'http://localhost:3000',
+//     optionsSuccessStatus: 200
+//   };
   
-  app.use(cors(corsOptions));
+//   app.use(cors(corsOptions));
   
 app.use(express.json());
 const signuprouter = require('./routes/signup');

@@ -17,7 +17,7 @@ app.use((req, res, next) => {
     // if (req.method === 'OPTIONS') {
     //     res.status(204).end();
     // } else {
-    //     next();
+         next();
     // }
 });
 // const corsOptions = {

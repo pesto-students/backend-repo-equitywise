@@ -110,6 +110,35 @@ async function getStock(req,res){
         res.status(500).json({ error: error.message });
     }
    }
+   async function sellApiStockById(req,res){
+    const { userId } = req.query;
+    console.log("userid: " +userId);
+    const { symbol, shares } = req.body;
+
+    try {
+        let portfolio = await Portfolio.findOne({user:userId});
+        if (!portfolio) {
+            return res.status(404).json({ error: 'Portfolio not found' });
+        }
+
+        // Find the stock by ID within the portfolio
+        let stock = portfolio.stocks.find(item => item.symbol === symbol);
+        if (!stock) {
+            return res.status(404).json({ error: 'Stock not found in portfolio' });
+        }
+
+        // Update stock fields
+        stock.symbol = symbol;
+        stock.shares = stock.shares - shares;
+        // Save the portfolio
+        await portfolio.save();
+
+        res.status(200).json(portfolio);
+    } catch (error) {
+        console.error('Error in Sell stock:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+   }
    async function deletestocksById(req,res)
    {
     const { userId, symbol } = req.query;
@@ -139,4 +168,4 @@ async function getStock(req,res){
     }
    }
 
-module.exports = { Stock, Portfolio ,stockInsert, getStock,updateStockById,deletestocksById};
+module.exports = { Stock, Portfolio ,stockInsert, getStock,updateStockById,deletestocksById,sellApiStockById};

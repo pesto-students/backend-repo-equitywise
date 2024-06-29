@@ -41,6 +41,7 @@ const getWishlisRrouter = require('./routes/getWishListRoutes');
 const insertWishlistRouter = require('./routes/insertWishlistRoutes');
 const updateWishlistRouter = require('./routes/updateWishlistRoutes');
 const deleteWishlistRouter = require('./routes/deleteWishlistRoutes')
+const sellSotckRouter = require('./routes/sellStockRoutes');
 app.use(signuprouter);
 app.use(loginrouter);
 app.use(isUserExistsrouter);
@@ -52,6 +53,7 @@ app.use(getWishlisRrouter);
 app.use(insertWishlistRouter);
 app.use(updateWishlistRouter);
 app.use(deleteWishlistRouter);
+app.use(sellSotckRouter);
 const PORT = process.env.port || 5000;
 app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}`);

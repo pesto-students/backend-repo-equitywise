@@ -1,8 +1,8 @@
+const cors = require('cors');
 const express = require('express');
+const app = express();
 const connectdb = require('./config/dbconfig');
 require('dotenv').config({path:"./Config/.env"});
-const cors = require('cors');
-const app=express();
 const allowedOrigins = ['http://localhost:3000', 'https://equitywise.netlify.app'];
 
 app.use((req, res, next) => {
@@ -10,19 +10,20 @@ app.use((req, res, next) => {
     if (allowedOrigins.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
-    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
+        res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+        res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
     }
     
     // Handle preflight requests
-    // if (req.method === 'OPTIONS') {
-    //     res.status(204).end();
-    // } else {
-         next();
-    // }
+    if (req.method === 'OPTIONS') {
+        res.status(204).end();
+    } else {
+        next();
+    }
 });
+
 // const corsOptions = {
 //     origin: 'http://localhost:3000',
 //     optionsSuccessStatus: 200
